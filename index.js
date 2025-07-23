@@ -109,13 +109,11 @@ async function run() {
 
 
 
-    // app.post("/coffees", async (req, res) => {
-    //   const newCoffee = req.body;
-    //   console.log(newCoffee);
+    // app.get("/coffees", async (req, res) => {
+    //   const cursor = coffeeDatabaseCollection.find();
 
-    //   const result = await coffeeDatabaseCollection.insertOne(newCoffee);
-
-    //   res.send(result);
+    //   const data = await cursor.toArray();
+    //   res.send(data);
     // });
 
 
@@ -128,6 +126,26 @@ async function run() {
        const result = await userDatabaseCollection.insertOne(newUser)
        res.send(newUser)
     })
+
+    app.get('/users', async(req,res)=>{
+       
+      const cursor = userDatabaseCollection.find()
+
+      const result = await cursor.toArray()
+      res.send(result)
+    })
+
+
+    app.delete("/users/:id", async (req, res) => {
+      const Id = req.params.id;
+
+      const query = { _id: new ObjectId(Id) };
+
+      const result = await userDatabaseCollection.deleteOne(query);
+
+      res.send(result);
+    });
+
 
 
 
