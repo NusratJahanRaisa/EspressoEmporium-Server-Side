@@ -26,10 +26,22 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
 
+
+
     const coffeeDatabaseCollection = client
       .db("coffeeDB")
       .collection("coffees");
+    
+    
+    const userDatabaseCollection = client.db("userDb").collection("users");
 
+
+
+
+
+
+
+    // coffee database api
     app.post("/coffees", async (req, res) => {
       const newCoffee = req.body;
       console.log(newCoffee);
@@ -93,6 +105,33 @@ async function run() {
 
       res.send(result);
     });
+
+
+
+
+    // app.post("/coffees", async (req, res) => {
+    //   const newCoffee = req.body;
+    //   console.log(newCoffee);
+
+    //   const result = await coffeeDatabaseCollection.insertOne(newCoffee);
+
+    //   res.send(result);
+    // });
+
+
+    // user database api
+
+    app.post('/users', async(req,res)=>{
+
+       const newUser = req.body;
+
+       const result = await userDatabaseCollection.insertOne(newUser)
+       res.send(newUser)
+    })
+
+
+
+
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
