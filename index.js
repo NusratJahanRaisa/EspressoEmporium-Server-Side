@@ -124,7 +124,7 @@ async function run() {
        const newUser = req.body;
 
        const result = await userDatabaseCollection.insertOne(newUser)
-       res.send(newUser)
+       res.send(result)
     })
 
     app.get('/users', async(req,res)=>{
@@ -134,6 +134,16 @@ async function run() {
       const result = await cursor.toArray()
       res.send(result)
     })
+
+    app.get("/users/:id", async (req, res) => {
+      const Id = req.params.id;
+
+      const query = { _id: new ObjectId(Id) };
+
+      const result = await userDatabaseCollection.findOne(query);
+
+      res.send(result);
+    });
 
 
     app.delete("/users/:id", async (req, res) => {
